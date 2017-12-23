@@ -1,0 +1,178 @@
+<html>
+<style type="text/css">
+h1 {
+    font-size: 30pt;
+}
+
+canvas {
+    width: 300pt;
+    height: 200pt;
+    border-color: lightgray;
+    border-style: dashed;
+    border-width: 1pt;
+}
+
+h2 {
+    font-size: 15pt;
+}
+
+input {
+    font-size: 9pt;
+}
+</style>
+<script src="https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
+<h1>
+		Filter Fun
+	</h1>
+<canvas id="canvas1">
+</canvas>
+<div>
+    <h2>
+			Load Image
+		</h2>
+    <input type="file" multiple="false" accept="image/*" id="fininput" onchange="loadimage()">
+</div>
+<div>
+    <h2>
+			Choose Filter
+		</h2>
+    <p>
+        <input type="button" value="Grayscale" id="grayfin" onclick="makegray()">
+        <input type="button" value="Red" id="redfin" onclick="changered()">
+        <input type="button" value="window Pane" class="winfil" onclick="makewindowpane()">
+        <input type="button" value="Trigonometry Shark" class="sharkfil" onclick="makeshark()">
+    </p>
+    <p>
+        <input type="button" value="Reset Image" id="resetfin" onclick="resetfingure()">
+    </p>
+</div>
+<script type="text/javascript">
+var image = null;
+var image2 = null;
+var image3 = null;
+//var copyimage = null;
+var can1
+
+function loadimage() {
+    can1 = document.getElementById("canvas1");
+    fginput = document.getElementById("fininput");
+    image = new SimpleImage(fginput);
+    image2 = new SimpleImage(fginput);
+    image3 = new SimpleImage(fginput);
+    image4 = new SimpleImage(fginput);
+    image5 = new SimpleImage(fginput);
+    image.drawTo(can1);
+
+}
+
+function makegray() {
+    var copyimage = image;
+    if (image == null || !image.complete()) {
+        alert("picture not loaded");
+    }
+
+    for (var pixel of copyimage.values()) {
+        var R = pixel.getRed();
+        var G = pixel.getGreen();
+        var B = pixel.getBlue();
+        var a = (R + G + B) / 3;
+        pixel.setRed(a);
+        pixel.setGreen(a);
+        pixel.setBlue(a);
+    }
+    copyimage.drawTo(can1);
+    //image2.drawTo(can1);
+}
+
+function changered() {
+    var copyimage = image2;
+    if (image == null || !image.complete()) {
+        alert("picture not loaded");
+    }
+    for (var pixel of copyimage.values()) {
+        var R = pixel.getRed();
+        var G = pixel.getGreen();
+        var B = pixel.getBlue();
+        var ave = (R + G + B) / 3;
+        if (ave < 128) {
+            pixel.setRed(2 * ave);
+            pixel.setGreen(0);
+            pixel.setBlue(0);
+        } else {
+            pixel.setRed(255);
+            pixel.setGreen(2 * ave - 255);
+            pixel.setBlue(2 * ave - 255);
+        }
+    }
+    copyimage.drawTo(can1);
+}
+
+function makewindowpane() {
+    var copyimage = image3;
+    if (image == null || !image.complete()) {
+        alert("picture not loaded");
+    }
+    var w = copyimage.getWidth();
+    var h = copyimage.getHeight();
+    for (var pixel of copyimage.values()) {
+        x = pixel.getX();
+        y = pixel.getY();
+        if (x < 50 || x > w - 50) {
+            pixel.setRed(255);
+            pixel.setGreen(255);
+            pixel.setBlue(0);
+        }
+        if (y < 50 || y > h - 50) {
+            pixel.setRed(255);
+            pixel.setGreen(255);
+            pixel.setBlue(0);
+        }
+        if (y > h / 2 - 10 && y < 10 + h / 2) {
+            pixel.setRed(255);
+            pixel.setGreen(255);
+            pixel.setBlue(0);
+        }
+        if (x > w / 2 - 10 && x < 10 + w / 2) {
+            pixel.setRed(255);
+            pixel.setGreen(255);
+            pixel.setBlue(0);
+        }
+        if (x > w / 4 && x < 20 + w / 4) {
+            pixel.setRed(255);
+            pixel.setGreen(255);
+            pixel.setBlue(0);
+        }
+        if (x > w / 4 * 3 - 20 && x < w / 4 * 3) {
+            pixel.setRed(255);
+            pixel.setGreen(255);
+            pixel.setBlue(0);
+        }
+    }
+    copyimage.drawTo(can1);
+}
+
+function makeshark() {
+    var copyimage = image4;
+    if (image == null || !image.complete()) {
+        alert("picture not loaded");
+    }
+    var h = copyimage.getHeight();
+    for (var pixel of copyimage.values()) {
+        var x = pixel.getX();
+        var y = pixel.getY();
+        if (y < (100 * Math.sin(1 / 50 * x) + 100) || y > (h - (100 * Math.sin(1 / 50 * x) + 100))) {
+            pixel.setBlue(255);
+        }
+    }
+    copyimage.drawTo(can1);
+}
+
+function resetfingure() {
+    if (image == null || !image.complete()) {
+        alert("picture not loaded");
+    }
+    image5.drawTo(can1);
+}
+</script>
+
+</html>
